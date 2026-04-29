@@ -1,0 +1,205 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #f3eee2;
+  --bg-deep: #ebe4d2;
+  --ink: #0c0c0a;
+  --ink-soft: #1a1a17;
+  --paper: #fbf8ef;
+  --rule: #d6cdb6;
+  --rule-soft: #e3dcc8;
+  --lime: #c8ff3a;
+  --lime-deep: #a4d61c;
+  --coral: #ff5436;
+  --plum: #2a1f4a;
+  --pulse: #ff3b3b;
+  --muted: #6a665a;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-deep: var(--bg-deep);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-paper: var(--paper);
+  --color-rule: var(--rule);
+  --color-rule-soft: var(--rule-soft);
+  --color-lime: var(--lime);
+  --color-lime-deep: var(--lime-deep);
+  --color-coral: var(--coral);
+  --color-plum: var(--plum);
+  --color-pulse: var(--pulse);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-fraunces);
+  --font-mono: var(--font-jetbrains);
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background-image:
+    radial-gradient(1100px 700px at 90% -10%, rgba(200, 255, 58, 0.18), transparent 60%),
+    radial-gradient(900px 600px at -10% 110%, rgba(255, 84, 54, 0.10), transparent 65%);
+  background-attachment: fixed;
+}
+
+/* Subtle paper grain so the cream isn't flat */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  mix-blend-mode: multiply;
+  background-image:
+    radial-gradient(rgba(0, 0, 0, 1) 1px, transparent 1px);
+  background-size: 3px 3px;
+  z-index: 0;
+}
+
+::selection {
+  background: var(--lime);
+  color: var(--ink);
+}
+
+.font-display {
+  font-family: var(--font-fraunces), ui-serif, Georgia, "Times New Roman", serif;
+  font-feature-settings: "ss01", "ss02";
+  letter-spacing: -0.02em;
+}
+
+.font-mono {
+  font-family: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
+}
+
+.h-display {
+  font-family: var(--font-fraunces), ui-serif, serif;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+}
+
+/* Animated scrolling marquee */
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.ticker-track {
+  animation: ticker 38s linear infinite;
+  will-change: transform;
+}
+
+/* Equalizer bars when actively listening */
+@keyframes eq {
+  0%, 100% { transform: scaleY(0.25); }
+  50%      { transform: scaleY(1); }
+}
+.eq-bar { animation: eq 0.9s ease-in-out infinite; transform-origin: bottom; }
+
+/* Pulse ring for the voice button */
+@keyframes ringPulse {
+  0%   { transform: scale(0.6); opacity: 0.7; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+.pulse-ring { animation: ringPulse 1.6s cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+
+@keyframes heartbeat {
+  0%, 70%, 100% { transform: scale(1); }
+  35%           { transform: scale(1.18); }
+  50%           { transform: scale(0.95); }
+}
+.heartbeat { animation: heartbeat 1.05s ease-in-out infinite; }
+
+/* Shimmer for the live "transcript" caret */
+@keyframes caret {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.caret { animation: caret 1s steps(1) infinite; }
+
+@keyframes drift {
+  0%   { transform: translate3d(-2%, 0, 0); }
+  100% { transform: translate3d(2%, 0, 0); }
+}
+.drift { animation: drift 14s ease-in-out infinite alternate; }
+
+/* Smooth path for the ECG sparkline */
+.ecg path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 0;
+}
+
+/* Inputs */
+.field {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  padding: 14px 16px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  width: 100%;
+  font: inherit;
+  color: var(--ink);
+}
+.field:focus {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 4px rgba(12, 12, 10, 0.08);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease;
+  cursor: pointer;
+  user-select: none;
+}
+.btn:active { transform: translateY(1px); }
+.btn-primary {
+  background: var(--ink);
+  color: var(--bg);
+  padding: 0.85rem 1.25rem;
+}
+.btn-primary:hover { background: #1f1d18; }
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  padding: 0.75rem 1.1rem;
+}
+.btn-ghost:hover { border-color: var(--ink); }
+
+.card {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 24px;
+  position: relative;
+}
+
+.rule {
+  height: 1px;
+  background: var(--rule);
+  width: 100%;
+}
+
+/* Custom scrollbar inside chat-like panes */
+.thin-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+.thin-scroll::-webkit-scrollbar-track { background: transparent; }
+.thin-scroll::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 999px; }
+.thin-scroll::-webkit-scrollbar-thumb:hover { background: var(--muted); }
